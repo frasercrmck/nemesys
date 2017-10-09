@@ -16,6 +16,11 @@ module regbank
 integer i;
 reg [(`WIDTH - 1):0] registers [(`NUM_REGS - 1):0];
 
+initial begin
+  for (i = 0; i < `NUM_REGS; i = i + 1)
+    registers[i] <= 0;
+end
+
 assign data_a = registers[addr_a];
 assign data_b = registers[addr_b];
 
