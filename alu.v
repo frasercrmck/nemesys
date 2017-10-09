@@ -35,6 +35,8 @@ always @(*) begin
       data_z <= data_a >> shift_amount;
     `SRL:
       data_z <= data_a >>> shift_amount;
+    `MOV:
+      data_z <= data_a;
   endcase // opcode
 end
 

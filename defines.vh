@@ -19,4 +19,6 @@
 `define SRA 11
 `define SRL 12
 
+`define MOV 15
+
 `endif // _defines_vh_
