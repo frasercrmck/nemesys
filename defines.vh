@@ -21,4 +21,6 @@
 
 `define MOV 15
 
+`define BR 19
+
 `endif // _defines_vh_

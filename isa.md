@@ -21,7 +21,7 @@ OPCODES
 16 ld
 17 st
 
-18 br
+19 br
 
 INST FORMATS
 ============
