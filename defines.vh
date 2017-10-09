@@ -1,6 +1,11 @@
 `ifndef _defines_vh_
 `define _defines_vh_
 
+`define FETCH      2'b00
+`define DECODE     2'b01
+`define EXECUTE    2'b10
+`define WRITE_BACK 2'b11
+
 `define WIDTH 32
 `define BITSIZE 5
 
