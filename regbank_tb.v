@@ -4,7 +4,7 @@ module regbank_testbench;
 
 wire [(`WIDTH - 1):0] data_a;
 wire [(`WIDTH - 1):0] data_b;
-reg [(`WIDTH - 1):0] data_z;
+reg [(`WIDTH - 1):0]  data_z;
 
 reg [(`REG_SEL - 1):0] addr_a;
 reg [(`REG_SEL - 1):0] addr_b;
