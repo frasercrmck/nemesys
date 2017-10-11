@@ -1,2 +1,5 @@
 # Waveforms
 *.vcd
+
+# Build directory
+build/
