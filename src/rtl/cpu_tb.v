@@ -13,7 +13,12 @@ initial begin
   #1
   reset = 0;
 
-  #50
+  #100
+  reset = 1;
+  #3
+  reset = 0;
+
+  #200
   $finish;
 end
 
