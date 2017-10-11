@@ -5,9 +5,9 @@
 module alu
 (
   input wire[4:0] opcode,
-  input wire signed [(`WIDTH - 1):0] data_a,
-  input wire signed [(`WIDTH - 1):0] data_b,
-  output reg signed [(`WIDTH - 1):0] data_z
+  input wire [(`WIDTH - 1):0] data_a,
+  input wire [(`WIDTH - 1):0] data_b,
+  output reg [(`WIDTH - 1):0] data_z
 );
 
 // Only shift by the lower 5-bits of input B
@@ -31,10 +31,10 @@ always @(*) begin
       data_z <= data_a ^ data_b;
     `SHL:
       data_z <= data_a << shift_amount;
-    `SRA:
-      data_z <= data_a >> shift_amount;
     `SRL:
-      data_z <= data_a >>> shift_amount;
+      data_z <= data_a >> shift_amount;
+    `SRA:
+      data_z <= $signed(data_a) >>> shift_amount;
     `MOV:
       data_z <= data_a;
   endcase // opcode

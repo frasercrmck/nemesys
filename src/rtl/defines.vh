@@ -21,8 +21,8 @@
 `define XOR 7
 
 `define SHL 10
-`define SRA 11
-`define SRL 12
+`define SRL 11
+`define SRA 12
 
 `define MOV 15
 

@@ -49,6 +49,12 @@ initial begin
     data_a = -4;
     data_b = 2;
   #4
+    opcode = `SRL;
+    data_a = 34;
+    data_b = 4;
+  #4
+    data_a = -200;
+  #4
     opcode = `SRA;
     data_a = 34;
     data_b = 2;
@@ -56,12 +62,6 @@ initial begin
     data_a = -200;
   #4
     data_b = 255;
-  #4
-    opcode = `SRL;
-    data_a = 34;
-    data_b = 2;
-  #4
-    data_a = -200;
 
   #256 $finish;
 end
