@@ -103,19 +103,19 @@ always @(posedge clk) begin
   case (state)
     `FETCH:
     begin
-      $display("fetch");
+      // nothing
     end
     `DECODE:
     begin
-      $display("decode");
+      // nothing
     end
     `EXECUTE:
     begin
-      $display("execute");
+      // nothing
     end
     `WRITE_BACK:
     begin
-      $display("write-back");
+      // nothing
     end
   endcase
 end
