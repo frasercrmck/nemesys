@@ -43,7 +43,7 @@ wire [(`WIDTH - 1):0] alu_data_a = !has_imm ? reg_data_a
 wire [(`WIDTH - 1):0] alu_data_b = !has_imm ? reg_data_b : 0;
 wire [(`WIDTH - 1):0] alu_data_z;
 
-wire [(`REG_SEL - 1):0] addr_a = has_imm   ? 0 : inst[10:5];
+wire [(`REG_SEL - 1):0] addr_a = has_imm   ? 0 : inst[9:5];
 wire [(`REG_SEL - 1):0] addr_b = has_imm   ? 0 : inst[4:0];
 wire [(`REG_SEL - 1):0] addr_z = is_branch ? 0 : inst[20:16];
 
