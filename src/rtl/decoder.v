@@ -55,7 +55,7 @@ assign has_large_imm = is_mov || is_branch;
 assign has_small_imm = is_alu_inst && inst[26] == 1'b1;
 assign is_b_sext = has_small_imm && inst[25] == 1'b1;
 
-assign a_regbank_addr = is_branch ? inst[19:16] : (has_large_imm ? 0 : inst[9:5]);
+assign a_regbank_addr = is_branch ? inst[19:16] : (is_mov ? 0 : inst[9:5]);
 assign b_regbank_addr = has_large_imm ? 0 : inst[4:0];
 assign z_regbank_addr = is_branch     ? 0 : inst[20:16];
 
