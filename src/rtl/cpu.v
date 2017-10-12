@@ -41,20 +41,37 @@ wire b_regbank_sel = 0;
 // Comparisons write to predicate registers
 wire z_regbank_sel = is_cmp ? `P_REGS : `S_REGS;
 
-wire has_imm = is_mov || is_branch;
+wire has_large_imm = is_mov || is_branch;
+// TODO: ALU instruction format bits?
+wire is_alu_inst = (opcode == `ADD ||
+                    opcode == `SUB ||
+                    opcode == `MPY ||
+                    opcode == `AND ||
+                    opcode == `OR  ||
+                    opcode == `XOR ||
+                    opcode == `SHL ||
+                    opcode == `SRL ||
+                    opcode == `SRA);
+wire has_small_imm = is_alu_inst && inst[26] == 1'b1;
+wire is_b_sext = has_small_imm && inst[25] == 1'b1;
 
 wire write_enable = state == `WRITE_BACK && !is_branch;
 
 // TODO: Not always sign-extended???
-wire [(`WIDTH - 1):0] alu_data_a = !has_imm ? reg_data_a
-                                            : {{16{inst[15]}}, inst[15:0] };
-wire [(`WIDTH - 1):0] alu_data_b = !has_imm ? reg_data_b : 0;
+wire [(`WIDTH - 1):0] alu_data_a = !has_large_imm ? reg_data_a
+                                                  : {{16{inst[15]}}, inst[15:0] };
+wire [(`WIDTH - 1):0] alu_data_b =
+  has_large_imm ? 0
+  : has_small_imm ?
+      (!is_b_sext ? addr_b : {{27{addr_b[(`REG_SEL - 1)]}}, addr_b})
+      : reg_data_b;
+
 wire [(`WIDTH - 1):0] alu_data_z;
 
 wire [(`REG_SEL - 1):0] addr_a = is_branch ? inst[19:16]
-                                           : (has_imm ? 0 : inst[9:5]);
-wire [(`REG_SEL - 1):0] addr_b = has_imm   ? 0 : inst[4:0];
-wire [(`REG_SEL - 1):0] addr_z = is_branch ? 0 : inst[20:16];
+                                           : (has_large_imm ? 0 : inst[9:5]);
+wire [(`REG_SEL - 1):0] addr_b = has_large_imm ? 0 : inst[4:0];
+wire [(`REG_SEL - 1):0] addr_z = is_branch     ? 0 : inst[20:16];
 
 wire [31:0] branch_addr = is_branch ? alu_data_a : 0;
 

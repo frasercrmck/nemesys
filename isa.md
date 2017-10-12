@@ -6,7 +6,8 @@ ISA
 #### Syntax
 
 ```
-OP A, B, Z
+OP rA, rB, rZ
+OP rA, #I, rZ
 ```
 
 #### Notes
@@ -24,12 +25,15 @@ OP A, B, Z
 | 10       | shl      |
 | 11       | sra      |
 | 12       | srl      |
-| 13       | cmp      |
+
+If the `I` bit is set, operand `B` is treated as an immediate value. In which
+case, bit `S` determines whether `B` is sign-extended (`1`) or zero-extended
+(`0`) to 32-bits.
 
 #### Encoding
 
 ```
-OOOOOXXX|XXXZZZZZ|XXXXXXAA|AAABBBBB
+OOOOOISX|XXXZZZZZ|XXXXXXAA|AAABBBBB
 ```
 
 ### CMP
@@ -65,17 +69,7 @@ comparisons.
 #### Encoding
 
 ```
-OOOOOXXX|XXXZZZZZ|XXXCCCAA|AAABBBBB
-```
-
-### ALU SMALL_IMM
-
-Not implemented
-
-#### Encoding
-
-```
-OOOOOXXX|XXXZZZZZ|XXXXXXAA|AAAIIIII
+OOOOO0XX|XXXZZZZZ|XXXCCCAA|AAABBBBB
 ```
 
 ### LARGE_IMM
