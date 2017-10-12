@@ -5,12 +5,12 @@ module regbank
   input wire clk,
   input wire reset,
   input wire write_enable,
-  input wire [(`REG_SEL - 1):0] addr_a,
-  input wire [(`REG_SEL - 1):0] addr_b,
-  input wire [(`REG_SEL - 1):0] addr_z,
-  output reg [(`WIDTH - 1):0] data_a,
-  output reg [(`WIDTH - 1):0] data_b,
-  input  wire [(`WIDTH - 1):0] data_z,
+  input wire [(`REG_SEL - 1):0] a_regbank_addr,
+  input wire [(`REG_SEL - 1):0] b_regbank_addr,
+  input wire [(`REG_SEL - 1):0] z_regbank_addr,
+  output reg [(`WIDTH - 1):0] a_data,
+  output reg [(`WIDTH - 1):0] b_data,
+  input  wire [(`WIDTH - 1):0] z_data,
   input wire a_regbank_sel,
   input wire b_regbank_sel,
   input wire z_regbank_sel
@@ -52,8 +52,8 @@ end
 endfunction // register_value
 
 always @(*) begin
-  data_a <= register_value(a_regbank_sel, addr_a);
-  data_b <= register_value(b_regbank_sel, addr_b);
+  a_data <= register_value(a_regbank_sel, a_regbank_addr);
+  b_data <= register_value(b_regbank_sel, b_regbank_addr);
 end
 
 always @(posedge clk) begin
@@ -67,9 +67,9 @@ always @(posedge clk) begin
           // Do nothing
         end
         `S_REGS:
-          s_regfile[addr_z[0 +: `REG_SEL]] <= data_z;
+          s_regfile[z_regbank_addr[0 +: `REG_SEL]] <= z_data;
         `P_REGS:
-          p_regfile[addr_z[0 +: `PRED_REG_SEL]] <= data_z[0];
+          p_regfile[z_regbank_addr[0 +: `PRED_REG_SEL]] <= z_data[0];
       endcase
     end
 end

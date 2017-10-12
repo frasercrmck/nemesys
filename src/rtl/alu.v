@@ -6,54 +6,54 @@ module alu
 (
   input wire[4:0] opcode,
   input wire[2:0] cc,
-  input wire [(`WIDTH - 1):0] data_a,
-  input wire [(`WIDTH - 1):0] data_b,
-  output reg [(`WIDTH - 1):0] data_z
+  input wire [(`WIDTH - 1):0] a_data,
+  input wire [(`WIDTH - 1):0] b_data,
+  output reg [(`WIDTH - 1):0] z_data
 );
 
 // Only shift by the lower 5-bits of input B
-wire [(`BITSIZE - 1):0] shift_amount = data_b[(`BITSIZE - 1):0];
+wire [(`BITSIZE - 1):0] shift_amount = b_data[(`BITSIZE - 1):0];
 
 always @(*) begin
   case (opcode)
     default:
-      data_z <= 0;
+      z_data <= 0;
     `ADD:
-      data_z <= data_a + data_b;
+      z_data <= a_data + b_data;
     `SUB:
-      data_z <= data_a - data_b;
+      z_data <= a_data - b_data;
     `MPY:
-      data_z <= data_a * data_b;
+      z_data <= a_data * b_data;
     `AND:
-      data_z <= data_a & data_b;
+      z_data <= a_data & b_data;
     `OR:
-      data_z <= data_a | data_b;
+      z_data <= a_data | b_data;
     `XOR:
-      data_z <= data_a ^ data_b;
+      z_data <= a_data ^ b_data;
     `SHL:
-      data_z <= data_a << shift_amount;
+      z_data <= a_data << shift_amount;
     `SRL:
-      data_z <= data_a >> shift_amount;
+      z_data <= a_data >> shift_amount;
     `SRA:
-      data_z <= $signed(data_a) >>> shift_amount;
+      z_data <= $signed(a_data) >>> shift_amount;
     `MOV:
-      data_z <= data_a;
+      z_data <= a_data;
     `CMP:
     begin
-      data_z[31:1] <= 0;
+      z_data[31:1] <= 0;
       case (cc)
         `EQ:
-          data_z[0] <= data_a == data_b;
+          z_data[0] <= a_data == b_data;
         `NE:
-          data_z[0] <= data_a != data_b;
+          z_data[0] <= a_data != b_data;
         `LT:
-          data_z[0] <= $signed(data_a) < $signed(data_b);
+          z_data[0] <= $signed(a_data) < $signed(b_data);
         `LE:
-          data_z[0] <= $signed(data_a) <= $signed(data_b);
+          z_data[0] <= $signed(a_data) <= $signed(b_data);
         `ULT:
-          data_z[0] <= $unsigned(data_a) < $unsigned(data_b);
+          z_data[0] <= $unsigned(a_data) < $unsigned(b_data);
         `ULE:
-          data_z[0] <= $unsigned(data_a) <= $unsigned(data_b);
+          z_data[0] <= $unsigned(a_data) <= $unsigned(b_data);
       endcase
     end
   endcase // opcode

@@ -20,7 +20,7 @@ wire pc_cntrl_enable = state == `WRITE_BACK;
 // Decoding logic
 //==------------------------------------------------------------------------==//
 
-wire take_branch = d.is_branch && regs.data_a == 1'b1;
+wire take_branch = d.is_branch && regs.a_data == 1'b1;
 
 wire write_enable = state == `WRITE_BACK && !d.is_branch;
 
@@ -54,22 +54,22 @@ alu a
 (
   .opcode (d.opcode),
   .cc     (d.cc),
-  .data_a (d.a_from_regbank ? regs.data_a : d.a_data),
-  .data_b (d.b_from_regbank ? regs.data_b : d.b_data)
+  .a_data (d.a_from_regbank ? regs.a_data : d.a_data),
+  .b_data (d.b_from_regbank ? regs.b_data : d.b_data)
 );
 
 regbank regs
 (
-  .clk           (clk),
-  .reset         (reset),
-  .write_enable  (write_enable),
-  .addr_a        (d.a_regbank_addr),
-  .addr_b        (d.b_regbank_addr),
-  .addr_z        (d.z_regbank_addr),
-  .data_z        (a.data_z),
-  .a_regbank_sel (d.a_regbank_sel),
-  .b_regbank_sel (d.b_regbank_sel),
-  .z_regbank_sel (d.z_regbank_sel)
+  .clk            (clk),
+  .reset          (reset),
+  .write_enable   (write_enable),
+  .a_regbank_addr (d.a_regbank_addr),
+  .b_regbank_addr (d.b_regbank_addr),
+  .z_regbank_addr (d.z_regbank_addr),
+  .z_data         (a.z_data),
+  .a_regbank_sel  (d.a_regbank_sel),
+  .b_regbank_sel  (d.b_regbank_sel),
+  .z_regbank_sel  (d.z_regbank_sel)
 );
 
 always @(posedge clk) begin
