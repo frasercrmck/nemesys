@@ -93,14 +93,14 @@ OOOOOXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX
 
 #### Syntax
 
-BR #IMM
+BR PA, #IMM
 
 #### Notes
 
 Branch target #IMM is relative offset.
 Branch target #IMM is sign-extended to 32-bits
-Branch is always taken
+Branch is taken if predicate `PA` is set to "true".
 
 #### Encoding
 
-OOOOOXXX|XXXXXXXX|IIIIIIII|IIIIIIII
+OOOOOXXX|XXXXXPPP|IIIIIIII|IIIIIIII

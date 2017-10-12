@@ -21,12 +21,13 @@ initial begin
     mem[1] = {`MOV, 6'd0, 5'd1, 16'd1};
             // MOV #6, R2
     mem[2] = {`MOV, 6'd0, 5'd2, 16'd6};
+            // LOOP:
             // ADD R0, R1, R0
     mem[3] = {`ADD, 6'd0, 5'd0, 6'd0, 5'd0, 5'd1};
             // CMP R0 {LT} R2, P0
     mem[4] = {`CMP, 6'd0, 5'd0, 3'd0, `LT, 5'd0, 5'd2};
-            // BR  #-2
-    mem[5] = {`BR,  6'd0, 5'd0, 16'hFFFE};
+            // BR  P0, #LOOP (-2)
+    mem[5] = {`BR,  8'd0, 3'd0, 16'hFFFE};
 end
 
 endmodule // instr_mem

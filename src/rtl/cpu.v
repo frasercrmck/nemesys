@@ -31,10 +31,10 @@ wire [4:0] opcode = inst[31:27];
 wire is_mov    = opcode == `MOV;
 wire is_branch = opcode == `BR;
 wire is_cmp    = opcode == `CMP;
-// TODO: Conditional branches
-wire take_branch = is_branch;
+wire take_branch = is_branch && reg_data_a == 1'b1;
 
-wire a_regbank_sel = 0;
+// Branches read from predicate registers
+wire a_regbank_sel = is_branch ? 1'b1 : 1'b0;
 wire b_regbank_sel = 0;
 // Comparisons write to predicate registers
 wire z_regbank_sel = is_cmp ? 1'b1 : 1'b0;
@@ -49,7 +49,8 @@ wire [(`WIDTH - 1):0] alu_data_a = !has_imm ? reg_data_a
 wire [(`WIDTH - 1):0] alu_data_b = !has_imm ? reg_data_b : 0;
 wire [(`WIDTH - 1):0] alu_data_z;
 
-wire [(`REG_SEL - 1):0] addr_a = has_imm   ? 0 : inst[9:5];
+wire [(`REG_SEL - 1):0] addr_a = is_branch ? inst[19:16]
+                                           : (has_imm ? 0 : inst[9:5]);
 wire [(`REG_SEL - 1):0] addr_b = has_imm   ? 0 : inst[4:0];
 wire [(`REG_SEL - 1):0] addr_z = is_branch ? 0 : inst[20:16];
 
