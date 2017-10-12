@@ -28,6 +28,8 @@ initial begin
     mem[4] = {`CMP, 6'd0, 5'd0, 3'd0, `LT, 5'd0, 5'd2};
             // BR  P0, #LOOP (-2)
     mem[5] = {`BR,  8'd0, 3'd0, 16'hFFFE};
+            // HALT
+    mem[6] = {`HALT,  27'd0};
 end
 
 endmodule // instr_mem

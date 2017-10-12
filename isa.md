@@ -104,3 +104,17 @@ Branch is taken if predicate `PA` is set to "true".
 #### Encoding
 
 OOOOOXXX|XXXXXPPP|IIIIIIII|IIIIIIII
+
+### HALT
+
+#### Syntax
+
+HALT
+
+#### Notes
+
+Immediately halts the processor, pausing further execution.
+
+#### Encoding
+
+OOOOOXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX

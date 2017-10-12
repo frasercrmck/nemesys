@@ -34,6 +34,7 @@
 `define MOV 5'd15
 
 `define BR  5'd19
+`define HALT 5'd20
 
 `define EQ  3'b000
 `define NE  3'b001

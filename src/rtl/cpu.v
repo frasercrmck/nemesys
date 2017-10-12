@@ -33,6 +33,8 @@ wire is_branch = opcode == `BR;
 wire is_cmp    = opcode == `CMP;
 wire take_branch = is_branch && reg_data_a == 1'b1;
 
+wire halted = opcode == `HALT;
+
 // Branches read from predicate registers
 wire a_regbank_sel = is_branch ? `P_REGS : `S_REGS;
 wire b_regbank_sel = 0;
@@ -108,8 +110,10 @@ regbank regs
 );
 
 always @(posedge clk) begin
-  state <= next_state;
-  next_state <= next_state + 1;
+  if (!halted) begin
+    state <= next_state;
+    next_state <= next_state + 1;
+  end
 end
 
 always @(posedge clk) begin
