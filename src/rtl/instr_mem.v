@@ -15,17 +15,17 @@ reg [(`WIDTH - 1):0] mem [`MEM_SIZE:0];
 assign inst = mem[pc];
 
 initial begin
-               // MOV        R0        0
+            // MOV #0, R0
     mem[0] = {`MOV, 6'd0, 5'd0, 16'd0};
-               // MOV        R1        1
+            // MOV #1, R1
     mem[1] = {`MOV, 6'd0, 5'd1, 16'd1};
-               // MOV        R2        6
+            // MOV #6, R2
     mem[2] = {`MOV, 6'd0, 5'd2, 16'd6};
-               // ADD        R0          R1    R0
-    mem[3] = {`ADD, 6'd0, 5'd0, 6'd0, 5'd1, 5'd0};
-               // CMP        R3          <LT>   R0    R2
+            // ADD R0, R1, R0
+    mem[3] = {`ADD, 6'd0, 5'd0, 6'd0, 5'd0, 5'd1};
+            // CMP R0 {LT} R2, R3
     mem[4] = {`CMP, 6'd0, 5'd3, 3'd0, `LT, 5'd0, 5'd2};
-               // BR                   -2
+            // BR  #-2
     mem[5] = {`BR,  6'd0, 5'd0, 16'hFFFE};
 end
 
