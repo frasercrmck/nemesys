@@ -95,15 +95,15 @@ alu a
 
 regbank regs
 (
-  .clk          (clk),
-  .reset        (reset),
-  .write_enable (write_enable),
-  .addr_a       (addr_a),
-  .addr_b       (addr_b),
-  .addr_z       (addr_z),
-  .data_a       (reg_data_a),
-  .data_b       (reg_data_b),
-  .data_z       (reg_data_z),
+  .clk           (clk),
+  .reset         (reset),
+  .write_enable  (write_enable),
+  .addr_a        (addr_a),
+  .addr_b        (addr_b),
+  .addr_z        (addr_z),
+  .data_a        (reg_data_a),
+  .data_b        (reg_data_b),
+  .data_z        (reg_data_z),
   .a_regbank_sel (a_regbank_sel),
   .b_regbank_sel (b_regbank_sel),
   .z_regbank_sel (z_regbank_sel)
