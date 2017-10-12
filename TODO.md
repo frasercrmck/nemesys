@@ -6,7 +6,7 @@ Verilog
 - [x] conditional branches
 - [x] "small immediate" encodings
 - [x] halting
-- [ ] comparisons w/ immediates
+- [x] comparisons w/ immediates
 - [ ] sub w/ immediate should reverse operands: #imm - rA?
 - [ ] branch when predicate false
 - [ ] link register

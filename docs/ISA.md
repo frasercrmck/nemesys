@@ -25,6 +25,7 @@ OP rA, #I, rZ
 | 10       | shl      |
 | 11       | sra      |
 | 12       | srl      |
+| 13       | cmp      |
 
 If the `I` bit is set, operand `B` is treated as an immediate value. In which
 case, bit `S` determines whether `B` is sign-extended (`1`) or zero-extended
@@ -43,19 +44,22 @@ Integer comparisons.
 #### Syntax
 
 ```
-CMP A <CC> B, PZ
+CMP rA <CC> rB, pZ
+CMP rA <CC> #I, pZ
 ```
 
 #### Notes
 
-`CC` is the condition code, and `PZ` is a predicate register.
+Operand `B` may be treated as a signed- or unsigned-immediate with the same
+mechanism as for other ALU instructions, above.
+
+`CC` is the condition code, and `pZ` is a predicate register.
 
 Comparison codes are: `NE`, `EQ`, `LT`, `LE`, `ULT`, `ULE`
 
 Codes `GE` and `GT` can be achieved by re-ordering the operands and using `LT`
 and `LE` operands, respectively. Same goes for the corresponding unsigned
 comparisons.
-
 
 | CC  |  C2 |  C1 |  C0 |
 | --- | --- | --- | --- |
@@ -69,7 +73,7 @@ comparisons.
 #### Encoding
 
 ```
-OOOOO0XX|XXXZZZZZ|XXXCCCAA|AAABBBBB
+OOOOOISX|XXXZZZZZ|XXXCCCAA|AAABBBBB
 ```
 
 ### LARGE_IMM

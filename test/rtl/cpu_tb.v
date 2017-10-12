@@ -17,7 +17,7 @@ initial begin
   #1
   reset = 0;
 
-  #250
+  #400
   $finish;
 end
 
