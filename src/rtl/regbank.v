@@ -33,21 +33,20 @@ initial begin
   reset_registers();
 end
 
-function [31:0] register_value
+function [(`WIDTH - 1):0] register_value
 (
   input regbank_sel,
-  input [4:0] regbank_addr
+  // Use a large address and only access the relevant bits
+  input [(`WIDTH - 1):0] regbank_addr
 );
 begin
   case (regbank_sel)
     default:
       register_value = 0;
     `S_REGS:
-      register_value =
-          s_regfile[regbank_addr[(`REG_SEL - 1):0]];
+      register_value = s_regfile[regbank_addr[0 +: `REG_SEL]];
     `P_REGS:
-      register_value =
-          p_regfile[regbank_addr[(`PRED_REG_SEL - 1):0]];
+      register_value = p_regfile[regbank_addr[0 +: `PRED_REG_SEL]];
   endcase
 end
 endfunction // register_value
@@ -68,9 +67,9 @@ always @(posedge clk) begin
           // Do nothing
         end
         `S_REGS:
-          s_regfile[addr_z[(`REG_SEL - 1):0]] <= data_z;
+          s_regfile[addr_z[0 +: `REG_SEL]] <= data_z;
         `P_REGS:
-          p_regfile[addr_z[(`PRED_REG_SEL - 1):0]] <= data_z[0];
+          p_regfile[addr_z[0 +: `PRED_REG_SEL]] <= data_z[0];
       endcase
     end
 end
