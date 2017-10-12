@@ -9,6 +9,7 @@ set(CPU_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/regbank.v
   ${CMAKE_CURRENT_SOURCE_DIR}/instr_mem.v
   ${CMAKE_CURRENT_SOURCE_DIR}/pc_cntrl.v
+  ${CMAKE_CURRENT_SOURCE_DIR}/decoder.v
   ${CMAKE_CURRENT_SOURCE_DIR}/cpu_tb.v
 )
 

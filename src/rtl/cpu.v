@@ -24,59 +24,23 @@ wire [(`WIDTH - 1):0] reg_data_z = alu_data_z;
 // Decoding logic
 //==------------------------------------------------------------------------==//
 
+wire [4:0] opcode;
 wire [(`WIDTH - 1):0] inst;
 
-wire [4:0] opcode = inst[31:27];
+wire is_branch, halted;
+wire a_regbank_sel, b_regbank_sel, z_regbank_sel;
 
-wire is_mov    = opcode == `MOV;
-wire is_branch = opcode == `BR;
-wire is_cmp    = opcode == `CMP;
 wire take_branch = is_branch && reg_data_a == 1'b1;
-
-wire halted = opcode == `HALT;
-
-// Branches read from predicate registers
-wire a_regbank_sel = is_branch ? `P_REGS : `S_REGS;
-wire b_regbank_sel = 0;
-// Comparisons write to predicate registers
-wire z_regbank_sel = is_cmp ? `P_REGS : `S_REGS;
-
-wire has_large_imm = is_mov || is_branch;
-// TODO: ALU instruction format bits?
-wire is_alu_inst = (opcode == `ADD ||
-                    opcode == `SUB ||
-                    opcode == `MPY ||
-                    opcode == `AND ||
-                    opcode == `OR  ||
-                    opcode == `XOR ||
-                    opcode == `SHL ||
-                    opcode == `SRL ||
-                    opcode == `SRA);
-wire has_small_imm = is_alu_inst && inst[26] == 1'b1;
-wire is_b_sext = has_small_imm && inst[25] == 1'b1;
 
 wire write_enable = state == `WRITE_BACK && !is_branch;
 
-// TODO: Not always sign-extended???
-wire [(`WIDTH - 1):0] alu_data_a = !has_large_imm ? reg_data_a
-                                                  : {{16{inst[15]}}, inst[15:0] };
-wire [(`WIDTH - 1):0] alu_data_b =
-  has_large_imm ? 0
-  : has_small_imm ?
-      (!is_b_sext ? addr_b : {{27{addr_b[(`REG_SEL - 1)]}}, addr_b})
-      : reg_data_b;
+wire a_from_regbank, b_from_regbank;
+wire [(`WIDTH - 1):0] a_data, b_data;
 
 wire [(`WIDTH - 1):0] alu_data_z;
+wire [(`REG_SEL - 1):0] addr_a, addr_b, addr_z;
 
-wire [(`REG_SEL - 1):0] addr_a = is_branch ? inst[19:16]
-                                           : (has_large_imm ? 0 : inst[9:5]);
-wire [(`REG_SEL - 1):0] addr_b = has_large_imm ? 0 : inst[4:0];
-wire [(`REG_SEL - 1):0] addr_z = is_branch     ? 0 : inst[20:16];
-
-wire [31:0] branch_addr = is_branch ? alu_data_a : 0;
-
-wire [2:0] cc = is_cmp ? inst[12:10] : 3'bz;
-
+wire [2:0] cc;
 wire [31:0] pc;
 
 //==------------------------------------------------------------------------==//
@@ -90,6 +54,25 @@ instr_mem i
   .inst (inst)
 );
 
+decoder d
+(
+  .inst           (inst),
+  .opcode         (opcode),
+  .is_branch      (is_branch),
+  .halted         (halted),
+  .cc             (cc),
+  .a_regbank_sel  (a_regbank_sel),
+  .a_from_regbank (a_from_regbank),
+  .a_data         (a_data),
+  .a_regbank_addr (addr_a),
+  .b_regbank_sel  (b_regbank_sel),
+  .b_from_regbank (b_from_regbank),
+  .b_data         (b_data),
+  .b_regbank_addr (addr_b),
+  .z_regbank_sel  (z_regbank_sel),
+  .z_regbank_addr (addr_z)
+);
+
 pc_cntrl pc_cntrl
 (
   .clk                (clk),
@@ -97,7 +80,7 @@ pc_cntrl pc_cntrl
   .enable             (pc_cntrl_enable),
   .take_branch        (take_branch),
   .is_relative_branch (take_branch), // TODO: Absolute branches
-  .branch_addr        (branch_addr),
+  .branch_addr        (a_data), // Branch addresses are taken from instruction
   .pc_out             (pc)
 );
 
@@ -105,8 +88,8 @@ alu a
 (
   .opcode (opcode),
   .cc     (cc),
-  .data_a (alu_data_a),
-  .data_b (alu_data_b),
+  .data_a (a_from_regbank ? reg_data_a : a_data),
+  .data_b (b_from_regbank ? reg_data_b : b_data),
   .data_z (alu_data_z)
 );
 
