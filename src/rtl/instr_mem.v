@@ -28,7 +28,7 @@ initial begin
             // CMP R0 {LT} #6, P5
     mem[4] = {`CMP, 2'b10, 4'd0, 5'd5, 3'd0, `LT, 5'd0, 5'd6};
             // BR  P5, #LOOP (-3)
-    mem[5] = {`BR,  8'd0, 3'd5, 16'hFFFD};
+    mem[5] = {`BR,  7'd0, 1'b0, 3'd5, 16'hFFFD};
 
             // HALT
     mem[6] = {`HALT,  27'd0};

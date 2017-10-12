@@ -109,19 +109,20 @@ OOOOOXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX
 #### Syntax
 
 ```
-BR PA, #IMM
+BR [!]pA, #IMM
 ```
 
 #### Notes
 
 Branch target `#IMM` is relative offset.
 Branch target `#IMM` is sign-extended to 32-bits
-Branch is taken if predicate `PA` is set to "true".
+If bit `N` is not set, the branch is taken if predicate `pA` is set; if bit `N`
+is set, the branch is taken is `pA` is not set.
 
 #### Encoding
 
 ```
-OOOOOXXX|XXXXXPPP|IIIIIIII|IIIIIIII
+OOOOOXXX|XXXXNPPP|IIIIIIII|IIIIIIII
 ```
 
 ### HALT

@@ -5,6 +5,7 @@ module decoder
   input wire [(`WIDTH - 1):0] inst,
   output wire [4:0] opcode,
   output wire is_branch,
+  output wire is_negated_branch,
   output wire halted,
   output wire [2:0] cc,
   // 'A' Data
@@ -41,6 +42,8 @@ assign is_branch = opcode == `BR;
 assign is_cmp    = opcode == `CMP;
 assign halted    = opcode == `HALT;
 
+assign is_negated_branch = is_branch && inst[19];
+
 assign cc = is_cmp ? inst[12:10] : 3'bz;
 
 // Input B is always a scalar register (if any)
@@ -55,7 +58,7 @@ assign has_large_imm = is_mov || is_branch;
 assign has_small_imm = is_alu_inst && inst[26] == 1'b1;
 assign is_b_sext = has_small_imm && inst[25] == 1'b1;
 
-assign a_regbank_addr = is_branch ? inst[19:16] : (is_mov ? 0 : inst[9:5]);
+assign a_regbank_addr = is_branch ? inst[18:16] : (is_mov ? 0 : inst[9:5]);
 assign b_regbank_addr = has_large_imm ? 0 : inst[4:0];
 assign z_regbank_addr = is_branch     ? 0 : inst[20:16];
 

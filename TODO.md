@@ -8,7 +8,7 @@ Verilog
 - [x] halting
 - [x] comparisons w/ immediates
 - [ ] sub w/ immediate should reverse operands: #imm - rA?
-- [ ] branch when predicate false
+- [x] branch when predicate false
 - [ ] link register
 - [ ] call/return instructions
 - [ ] memory instructions

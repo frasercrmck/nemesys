@@ -20,7 +20,9 @@ wire pc_cntrl_enable = state == `WRITE_BACK;
 // Decoding logic
 //==------------------------------------------------------------------------==//
 
-wire take_branch = d.is_branch && regs.a_data == 1'b1;
+wire take_branch = d.is_branch &&
+                   (d.is_negated_branch && !regs.a_data[0] ||
+                   !d.is_negated_branch &&  regs.a_data[0]);
 
 wire write_enable = state == `WRITE_BACK && !d.is_branch;
 
@@ -36,8 +38,7 @@ instr_mem i
 
 decoder d
 (
-  .inst           (i.inst),
-  .is_branch      (is_branch)
+  .inst           (i.inst)
 );
 
 pc_cntrl pc_cntrl
