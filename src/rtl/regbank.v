@@ -42,10 +42,10 @@ begin
   case (regbank_sel)
     default:
       register_value = 0;
-    1'b0:
+    `S_REGS:
       register_value =
           s_regfile[regbank_addr[(`REG_SEL - 1):0]];
-    1'b1:
+    `P_REGS:
       register_value =
           p_regfile[regbank_addr[(`PRED_REG_SEL - 1):0]];
   endcase
@@ -67,10 +67,9 @@ always @(posedge clk) begin
         begin
           // Do nothing
         end
-        1'b0: begin
+        `S_REGS:
           s_regfile[addr_z[(`REG_SEL - 1):0]] <= data_z;
-        end
-        1'b1:
+        `P_REGS:
           p_regfile[addr_z[(`PRED_REG_SEL - 1):0]] <= data_z[0];
       endcase
     end

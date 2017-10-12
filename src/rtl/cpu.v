@@ -34,10 +34,10 @@ wire is_cmp    = opcode == `CMP;
 wire take_branch = is_branch && reg_data_a == 1'b1;
 
 // Branches read from predicate registers
-wire a_regbank_sel = is_branch ? 1'b1 : 1'b0;
+wire a_regbank_sel = is_branch ? `P_REGS : `S_REGS;
 wire b_regbank_sel = 0;
 // Comparisons write to predicate registers
-wire z_regbank_sel = is_cmp ? 1'b1 : 1'b0;
+wire z_regbank_sel = is_cmp ? `P_REGS : `S_REGS;
 
 wire has_imm = is_mov || is_branch;
 

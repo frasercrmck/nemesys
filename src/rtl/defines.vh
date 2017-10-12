@@ -14,6 +14,9 @@
 `define REG_SEL 5
 `define PRED_REG_SEL 3
 
+`define S_REGS 1'b0
+`define P_REGS 1'b1
+
 `define ADD 5'd0
 `define SUB 5'd1
 `define MPY 5'd2
