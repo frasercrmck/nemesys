@@ -75,7 +75,7 @@ wire [(`REG_SEL - 1):0] addr_z = is_branch     ? 0 : inst[20:16];
 
 wire [31:0] branch_addr = is_branch ? alu_data_a : 0;
 
-wire [2:0] cc = is_cmp ? inst[12:10] : 0;
+wire [2:0] cc = is_cmp ? inst[12:10] : 3'bz;
 
 wire [31:0] pc;
 
