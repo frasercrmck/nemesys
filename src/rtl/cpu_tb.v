@@ -7,6 +7,10 @@ reg reset = 0;
 initial begin
   $dumpfile("cpu_tb.vcd");
   $dumpvars(0, cpu_testbench);
+  $dumpvars(0, c.regs.s_regfile[0]);
+  $dumpvars(0, c.regs.s_regfile[1]);
+  $dumpvars(0, c.regs.s_regfile[2]);
+  $dumpvars(0, c.regs.p_regfile[0]);
 
   #1
   reset = 1;

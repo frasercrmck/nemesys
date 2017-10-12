@@ -10,7 +10,9 @@
 `define BITSIZE 5
 
 `define NUM_REGS 32
+`define NUM_PRED_REGS 8
 `define REG_SEL 5
+`define PRED_REG_SEL 3
 
 `define ADD 5'd0
 `define SUB 5'd1

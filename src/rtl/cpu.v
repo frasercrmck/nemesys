@@ -34,6 +34,11 @@ wire is_cmp    = opcode == `CMP;
 // TODO: Conditional branches
 wire take_branch = is_branch;
 
+wire a_regbank_sel = 0;
+wire b_regbank_sel = 0;
+// Comparisons write to predicate registers
+wire z_regbank_sel = is_cmp ? 1'b1 : 1'b0;
+
 wire has_imm = is_mov || is_branch;
 
 wire write_enable = state == `WRITE_BACK && !is_branch;
@@ -95,7 +100,10 @@ regbank regs
   .addr_z       (addr_z),
   .data_a       (reg_data_a),
   .data_b       (reg_data_b),
-  .data_z       (reg_data_z)
+  .data_z       (reg_data_z),
+  .a_regbank_sel (a_regbank_sel),
+  .b_regbank_sel (b_regbank_sel),
+  .z_regbank_sel (z_regbank_sel)
 );
 
 always @(posedge clk) begin
