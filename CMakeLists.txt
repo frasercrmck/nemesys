@@ -1,14 +1,5 @@
 cmake_minimum_required( VERSION 3.5 )
 
-function( create_testbench TARGET TB_BINARY DIR SOURCES )
-  add_custom_command(
-    OUTPUT ${TB_BINARY}
-    COMMAND iverilog -o ${TB_BINARY} -I ${DIR} ${${SOURCES}}
-    WORKING_DIRECTORY "${DIR}"
-    COMMENT "Creating ${TB_BINARY}"
-    DEPENDS ${${SOURCES}}
-  )
-  add_custom_target(${TARGET} ALL DEPENDS ${TB_BINARY})
-endfunction(create_testbench)
+set( RTL_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/rtl" )
 
-add_subdirectory(src/rtl)
+add_subdirectory(test/rtl)
