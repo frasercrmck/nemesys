@@ -60,7 +60,7 @@ assign b_regbank_addr = has_large_imm ? 0 : inst[4:0];
 assign z_regbank_addr = is_branch     ? 0 : inst[20:16];
 
 // TODO: Not always sign-extended???
-assign a_from_regbank = !has_large_imm;
+assign a_from_regbank = is_branch || !has_large_imm;
 assign a_data = {{16{inst[15]}}, inst[15:0] };
 
 assign b_from_regbank = !has_large_imm && !has_small_imm;
