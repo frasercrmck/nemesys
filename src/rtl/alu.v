@@ -5,6 +5,7 @@
 module alu
 (
   input wire[4:0] opcode,
+  input wire[2:0] cc,
   input wire [(`WIDTH - 1):0] data_a,
   input wire [(`WIDTH - 1):0] data_b,
   output reg [(`WIDTH - 1):0] data_z
@@ -37,6 +38,24 @@ always @(*) begin
       data_z <= $signed(data_a) >>> shift_amount;
     `MOV:
       data_z <= data_a;
+    `CMP:
+    begin
+      data_z[31:1] <= 0;
+      case (cc)
+        `EQ:
+          data_z[0] <= data_a == data_b;
+        `NE:
+          data_z[0] <= data_a != data_b;
+        `LT:
+          data_z[0] <= $signed(data_a) < $signed(data_b);
+        `LE:
+          data_z[0] <= $signed(data_a) <= $signed(data_b);
+        `ULT:
+          data_z[0] <= $unsigned(data_a) < $unsigned(data_b);
+        `ULE:
+          data_z[0] <= $unsigned(data_a) <= $unsigned(data_b);
+      endcase
+    end
   endcase // opcode
 end
 

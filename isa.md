@@ -22,6 +22,7 @@ OP is instruction opcode. Can be one of:
 | 10       | shl      |
 | 11       | sra      |
 | 12       | srl      |
+| 13       | cmp      |
 
 #### Encoding
 
@@ -29,7 +30,7 @@ OOOOOXXX|XXXZZZZZ|XXXXXXAA|AAABBBBB
 
 ### CMP
 
-Integer comparisons. Not implemented.
+Integer comparisons.
 
 #### Syntax
 
@@ -47,40 +48,16 @@ Comparison codes are: NE, EQ, LT, LE, ULT, ULE
 
 | CC  |  C2 |  C1 |  C0 |
 | --- | --- | --- | --- |
-| NE  |  0  |  0  |  0  |
-| EQ  |  0  |  0  |  1  |
+| EQ  |  0  |  0  |  0  |
+| NE  |  0  |  0  |  1  |
 | LT  |  0  |  1  |  0  |
 | LE  |  0  |  1  |  1  |
 | ULT |  1  |  0  |  0  |
 | ULE |  1  |  0  |  1  |
 
-Alternative verbose encoding; would allow use of GE, GT, UGE and UGT but costs
-an extra bit and wastes more of them.
-
-Comparison codes are: EQ, NE, LT, LE, GT, GE, ULT, ULE, UGT, UGE
-
-| CC  |  N  |  C2 |  C1 |  C0 |
-| --- | --- | --- | --- | --- |
-| EQ  |  0  |  0  |  0  |  0  |
-| LT  |  0  |  0  |  0  |  1  |
-| LE  |  0  |  0  |  1  |  0  |
-| ULT |  0  |  0  |  1  |  1  |
-| ULE |  0  |  1  |  0  |  0  |
-| XXX |  0  |  1  |  0  |  1  |
-| XXX |  0  |  1  |  1  |  0  |
-| XXX |  0  |  1  |  1  |  1  |
-| NE  |  1  |  0  |  0  |  0  |
-| GE  |  1  |  0  |  0  |  1  |
-| GT  |  1  |  0  |  1  |  0  |
-| UGE |  1  |  0  |  1  |  1  |
-| UGT |  1  |  1  |  0  |  0  |
-| XXX |  1  |  1  |  0  |  1  |
-| XXX |  1  |  1  |  1  |  0  |
-| XXX |  1  |  1  |  1  |  0  |
-
 #### Encoding
 
-OOOOOXXX|XXXZZZZZ|XXNCCCAA|AAABBBBB
+OOOOOXXX|XXXZZZZZ|XXXCCCAA|AAABBBBB
 
 ### ALU SMALL_IMM
 

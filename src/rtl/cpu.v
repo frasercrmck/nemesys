@@ -30,6 +30,7 @@ wire [4:0] opcode = inst[31:27];
 
 wire is_mov    = opcode == `MOV;
 wire is_branch = opcode == `BR;
+wire is_cmp    = opcode == `CMP;
 // TODO: Conditional branches
 wire take_branch = is_branch;
 
@@ -48,6 +49,8 @@ wire [(`REG_SEL - 1):0] addr_b = has_imm   ? 0 : inst[4:0];
 wire [(`REG_SEL - 1):0] addr_z = is_branch ? 0 : inst[20:16];
 
 wire [31:0] branch_addr = is_branch ? alu_data_a : 0;
+
+wire [2:0] cc = is_cmp ? inst[12:10] : 0;
 
 wire [31:0] pc;
 
@@ -76,6 +79,7 @@ pc_cntrl pc_cntrl
 alu a
 (
   .opcode (opcode),
+  .cc     (cc),
   .data_a (alu_data_a),
   .data_b (alu_data_b),
   .data_z (alu_data_z)

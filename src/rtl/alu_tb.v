@@ -6,6 +6,8 @@ reg [4:0]  opcode;
 reg [31:0] data_a;
 reg [31:0] data_b;
 
+reg [2:0] cc;
+
 initial begin
   $dumpfile("alu_tb.vcd");
   $dumpvars(0, alu_testbench);
@@ -62,14 +64,111 @@ initial begin
     data_a = -200;
   #4
     data_b = 255;
-
-  #256 $finish;
+  #4
+    opcode = `CMP;
+    cc = `EQ;
+    data_a = 4;
+    data_b = 5;
+  #1
+    data_a = -15;
+    data_b = -15;
+  #1
+    data_a = -5;
+    data_b = 0;
+  #1
+    data_a = 0;
+    data_b = 0;
+  #1
+    cc = `NE;
+    data_a = 6;
+    data_b = -42;
+  #1
+    data_a = 0;
+    data_b = 0;
+  #1
+    data_a = 128;
+    data_b = 126;
+  #1
+    data_a = -5;
+    data_b = -5;
+  #1
+    cc = `LT;
+    data_a = 7;
+    data_b = 6;
+  #1
+    data_a = 6;
+    data_b = 7;
+  #1
+    data_a = -1;
+    data_b = 88;
+  #1
+    data_a = -2;
+    data_b = -9;
+  #1
+    data_a = 14;
+    data_b = 14;
+  #1
+    cc = `LE;
+    data_a = 7;
+    data_b = 6;
+  #1
+    data_a = 6;
+    data_b = 7;
+  #1
+    data_a = -1;
+    data_b = 88;
+  #1
+    data_a = -2;
+    data_b = -9;
+  #1
+    data_a = 14;
+    data_b = 14;
+  #1
+    cc = `ULT;
+    data_a = 5;
+    data_b = 6;
+  #1
+    data_a = 6;
+    data_b = 5;
+  #1
+    data_a = -1;
+    data_b = 88;
+  #1
+    data_a = 100;
+    data_b = -156;
+  #1
+    data_a = 5;
+    data_b = 5;
+  #1
+    data_a = -99;
+    data_b = -99;
+  #1
+    cc = `ULE;
+    data_a = 5;
+    data_b = 6;
+  #1
+    data_a = 6;
+    data_b = 5;
+  #1
+    data_a = -1;
+    data_b = 88;
+  #1
+    data_a = 100;
+    data_b = -156;
+  #1
+    data_a = 5;
+    data_b = 5;
+  #1
+    data_a = -99;
+    data_b = -99;
+  #20 $finish;
 end
 
 wire [31:0] data_out;
 
 alu a(
   opcode,
+  cc,
   data_a,
   data_b,
   data_out

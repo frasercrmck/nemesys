@@ -24,8 +24,17 @@
 `define SRL 11
 `define SRA 12
 
+`define CMP 13
+
 `define MOV 15
 
 `define BR 19
+
+`define EQ  3'b000
+`define NE  3'b001
+`define LT  3'b010
+`define LE  3'b011
+`define ULT 3'b100
+`define ULE 3'b101
 
 `endif // _defines_vh_
