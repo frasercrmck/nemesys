@@ -11,8 +11,8 @@
 
 `define NUM_REGS 32
 `define NUM_PRED_REGS 8
-`define REG_SEL 5
-`define PRED_REG_SEL 3
+`define REG_SEL $clog2(`NUM_REGS)
+`define PRED_REG_SEL $clog2(`NUM_PRED_REGS)
 
 `define S_REGS 1'b0
 `define P_REGS 1'b1
