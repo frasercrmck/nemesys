@@ -12,23 +12,23 @@
 `define NUM_REGS 32
 `define REG_SEL 5
 
-`define ADD 0
-`define SUB 1
-`define MPY 2
+`define ADD 5'd0
+`define SUB 5'd1
+`define MPY 5'd2
 
-`define AND 5
-`define OR  6
-`define XOR 7
+`define AND 5'd5
+`define OR  5'd6
+`define XOR 5'd7
 
-`define SHL 10
-`define SRL 11
-`define SRA 12
+`define SHL 5'd10
+`define SRL 5'd11
+`define SRA 5'd12
 
-`define CMP 13
+`define CMP 5'd13
 
-`define MOV 15
+`define MOV 5'd15
 
-`define BR 19
+`define BR  5'd19
 
 `define EQ  3'b000
 `define NE  3'b001
