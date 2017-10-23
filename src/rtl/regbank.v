@@ -59,19 +59,18 @@ end
 always @(posedge clk) begin
   if (reset)
     reset_registers();
-  else
-    if (write_enable) begin
-      case (z_regbank_sel)
-        default:
-        begin
-          // Do nothing
-        end
-        `S_REGS:
-          s_regfile[z_regbank_addr[0 +: `REG_SEL]] <= z_data;
-        `P_REGS:
-          p_regfile[z_regbank_addr[0 +: `PRED_REG_SEL]] <= z_data[0];
-      endcase
-    end
+  else if (write_enable) begin
+    case (z_regbank_sel)
+      default:
+      begin
+        // Do nothing
+      end
+      `S_REGS:
+        s_regfile[z_regbank_addr[0 +: `REG_SEL]] <= z_data;
+      `P_REGS:
+        p_regfile[z_regbank_addr[0 +: `PRED_REG_SEL]] <= z_data[0];
+    endcase
+  end
 end
 
 endmodule // regbank
