@@ -11,8 +11,8 @@ Verilog
 - [ ] add/sub with carry
 - [ ] mov immediate hi/lo 16-bits
 - [x] branch when predicate false
-- [ ] link register
-- [ ] call/return instructions
+- [x] link register
+- [x] call/return instructions
 - [ ] memory instructions
 - [ ] select instructions
 - [ ] remove hard-coded numbers; be as generic as possible

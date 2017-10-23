@@ -29,9 +29,19 @@ initial begin
     mem[4] = {`CMP, 2'b10, 6'd0, `P5, 3'd0, `LT, `R0, 5'd6};
             // BR  P5, #LOOP (-3)
     mem[5] = {`BR,  7'd0, 1'b0, `P5, 16'hFFFD};
+            // CALL #FUNC (+2)
+    mem[6] = {`CALL,  7'd0, 1'b0, `P5, 16'h2};
+            // HALT
+    mem[7] = {`HALT,  27'd0};
+
+            // FUNC:
+            // MOV #42, R9
+    mem[8] = {`MOV, 6'd0, `R9, 16'd42};
+            // RET
+    mem[9] = {`RET, 27'd0};
 
             // HALT
-    mem[6] = {`HALT,  27'd0};
+    mem[10] = {`HALT,  27'd0};
 end
 
 endmodule // instr_mem

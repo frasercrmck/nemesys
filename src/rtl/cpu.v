@@ -20,9 +20,10 @@ wire pc_cntrl_enable = state == `WRITE_BACK;
 // Decoding logic
 //==------------------------------------------------------------------------==//
 
-wire take_branch = decoder.is_branch &&
-                   (decoder.is_negated_branch && !regs.a_data[0] ||
-                   !decoder.is_negated_branch &&  regs.a_data[0]);
+wire take_branch = (decoder.is_branch &&
+                     (decoder.is_negated_branch && !regs.a_data[0] ||
+                     !decoder.is_negated_branch &&  regs.a_data[0])) ||
+                    decoder.is_call || decoder.is_ret;
 
 wire write_enable = state == `WRITE_BACK && !decoder.is_branch;
 
@@ -47,8 +48,8 @@ pc_cntrl pc_cntrl
   .reset              (reset),
   .enable             (pc_cntrl_enable),
   .take_branch        (take_branch),
-  .is_relative_branch (take_branch), // TODO: Absolute branches
-  .branch_addr        (decoder.a_data) // Branch addresses are taken from instruction
+  .is_relative_branch (!decoder.is_ret), // TODO: Absolute branches and calls
+  .branch_addr        (decoder.is_ret ? regs.a_data : decoder.a_data) // Branch addresses are taken from instruction; returns from the link register
 );
 
 alu_unit alu
@@ -67,7 +68,7 @@ regbank regs
   .a_regbank_addr (decoder.a_regbank_addr),
   .b_regbank_addr (decoder.b_regbank_addr),
   .z_regbank_addr (decoder.z_regbank_addr),
-  .z_data         (alu.z_data),
+  .z_data         (decoder.is_call ? pc_cntrl.pc_out + 1 : alu.z_data),
   .a_regbank_sel  (decoder.a_regbank_sel),
   .b_regbank_sel  (decoder.b_regbank_sel),
   .z_regbank_sel  (decoder.z_regbank_sel)

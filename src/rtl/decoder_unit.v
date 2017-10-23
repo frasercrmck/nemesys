@@ -6,6 +6,8 @@ module decoder_unit
   output wire [4:0] opcode,
   output wire is_branch,
   output wire is_negated_branch,
+  output wire is_call,
+  output wire is_ret,
   output wire halted,
   output wire [2:0] cc,
   // 'A' Data
@@ -39,6 +41,8 @@ wire is_alu_inst = (opcode == `ADD ||
 
 assign is_mov    = opcode == `MOV;
 assign is_branch = opcode == `BR;
+assign is_call   = opcode == `CALL;
+assign is_ret    = opcode == `RET;
 assign is_cmp    = opcode == `CMP;
 assign halted    = opcode == `HALT;
 
@@ -53,14 +57,14 @@ assign a_regbank_sel = is_branch ? `P_REGS : `S_REGS;
 // Comparisons write to predicate registers
 assign z_regbank_sel = is_cmp ? `P_REGS : `S_REGS;
 
-assign has_large_imm = is_mov || is_branch;
+assign has_large_imm = is_mov || is_branch || is_call;
 
 assign has_small_imm = is_alu_inst && inst[26] == 1'b1;
 assign is_b_sext = has_small_imm && inst[25] == 1'b1;
 
-assign a_regbank_addr = is_branch ? inst[18:16] : (is_mov ? 0 : inst[9:5]);
+assign a_regbank_addr = is_branch ? inst[18:16] : is_ret ? `R31 : is_mov ? 0 : inst[9:5];
 assign b_regbank_addr = has_large_imm ? 0 : inst[4:0];
-assign z_regbank_addr = is_branch     ? 0 : inst[20:16];
+assign z_regbank_addr = is_branch ? 0 : is_call ? `R31 : inst[20:16];
 
 // TODO: Not always sign-extended???
 assign a_from_regbank = !is_mov;

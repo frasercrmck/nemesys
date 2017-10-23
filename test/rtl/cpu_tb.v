@@ -11,6 +11,7 @@ initial begin
   $dumpvars(0, c.regs.s_regfile[1]);
   $dumpvars(0, c.regs.s_regfile[2]);
   $dumpvars(0, c.regs.p_regfile[0]);
+  $dumpvars(0, c.regs.s_regfile[31]);
 
   #1
   reset = 1;

@@ -16,3 +16,6 @@
 
 19 BR
 20 HALT
+
+21 CALL
+22 RET

@@ -35,7 +35,7 @@ end
 
 function [(`WIDTH - 1):0] register_value
 (
-  input regbank_sel,
+  input [1:0] regbank_sel,
   // Use a large address and only access the relevant bits
   input [(`WIDTH - 1):0] regbank_addr
 );

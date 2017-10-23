@@ -36,6 +36,9 @@
 `define BR  5'd19
 `define HALT 5'd20
 
+`define CALL  5'd21
+`define RET   5'd22
+
 `define EQ  3'b000
 `define NE  3'b001
 `define LT  3'b010
