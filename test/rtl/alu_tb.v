@@ -166,7 +166,7 @@ end
 
 wire [31:0] data_out;
 
-alu a(
+alu_unit a(
   opcode,
   cc,
   data_a,

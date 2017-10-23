@@ -20,11 +20,11 @@ wire pc_cntrl_enable = state == `WRITE_BACK;
 // Decoding logic
 //==------------------------------------------------------------------------==//
 
-wire take_branch = d.is_branch &&
-                   (d.is_negated_branch && !regs.a_data[0] ||
-                   !d.is_negated_branch &&  regs.a_data[0]);
+wire take_branch = decoder.is_branch &&
+                   (decoder.is_negated_branch && !regs.a_data[0] ||
+                   !decoder.is_negated_branch &&  regs.a_data[0]);
 
-wire write_enable = state == `WRITE_BACK && !d.is_branch;
+wire write_enable = state == `WRITE_BACK && !decoder.is_branch;
 
 //==------------------------------------------------------------------------==//
 // Unit Instantiations
@@ -36,7 +36,7 @@ instr_mem i
   .pc  (pc_cntrl.pc_out)
 );
 
-decoder d
+decoder_unit decoder
 (
   .inst (i.inst)
 );
@@ -48,15 +48,15 @@ pc_cntrl pc_cntrl
   .enable             (pc_cntrl_enable),
   .take_branch        (take_branch),
   .is_relative_branch (take_branch), // TODO: Absolute branches
-  .branch_addr        (d.a_data) // Branch addresses are taken from instruction
+  .branch_addr        (decoder.a_data) // Branch addresses are taken from instruction
 );
 
-alu a
+alu_unit alu
 (
-  .opcode (d.opcode),
-  .cc     (d.cc),
-  .a_data (d.a_from_regbank ? regs.a_data : d.a_data),
-  .b_data (d.b_from_regbank ? regs.b_data : d.b_data)
+  .opcode (decoder.opcode),
+  .cc     (decoder.cc),
+  .a_data (decoder.a_from_regbank ? regs.a_data : decoder.a_data),
+  .b_data (decoder.b_from_regbank ? regs.b_data : decoder.b_data)
 );
 
 regbank regs
@@ -64,17 +64,17 @@ regbank regs
   .clk            (clk),
   .reset          (reset),
   .write_enable   (write_enable),
-  .a_regbank_addr (d.a_regbank_addr),
-  .b_regbank_addr (d.b_regbank_addr),
-  .z_regbank_addr (d.z_regbank_addr),
-  .z_data         (a.z_data),
-  .a_regbank_sel  (d.a_regbank_sel),
-  .b_regbank_sel  (d.b_regbank_sel),
-  .z_regbank_sel  (d.z_regbank_sel)
+  .a_regbank_addr (decoder.a_regbank_addr),
+  .b_regbank_addr (decoder.b_regbank_addr),
+  .z_regbank_addr (decoder.z_regbank_addr),
+  .z_data         (alu.z_data),
+  .a_regbank_sel  (decoder.a_regbank_sel),
+  .b_regbank_sel  (decoder.b_regbank_sel),
+  .z_regbank_sel  (decoder.z_regbank_sel)
 );
 
 always @(posedge clk) begin
-  if (!d.halted) begin
+  if (!decoder.halted) begin
     state <= next_state;
     next_state <= next_state + 1;
   end

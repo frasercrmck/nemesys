@@ -1,6 +1,6 @@
 `include "defines.vh"
 
-module decoder
+module decoder_unit
 (
   input wire [(`WIDTH - 1):0] inst,
   output wire [4:0] opcode,
@@ -71,4 +71,4 @@ assign b_from_regbank = !has_large_imm && !has_small_imm;
 wire [(`REG_SEL - 1):0] b_imm = has_small_imm ? b_regbank_addr : 0;
 assign b_data = !is_b_sext ? b_imm : {{27{b_imm[(`REG_SEL - 1)]}}, b_imm};
 
-endmodule // decoder
+endmodule // decoder_unit

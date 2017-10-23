@@ -2,7 +2,7 @@
 
 // TODO: Add & Sub with carry in/out
 
-module alu
+module alu_unit
 (
   input wire[4:0] opcode,
   input wire[2:0] cc,
@@ -59,4 +59,4 @@ always @(*) begin
   endcase // opcode
 end
 
-endmodule // alu
+endmodule // alu_unit
