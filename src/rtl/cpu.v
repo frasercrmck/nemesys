@@ -32,13 +32,13 @@ wire write_enable = state == `WRITE_BACK && !d.is_branch;
 
 instr_mem i
 (
-  .clk  (clk),
-  .pc   (pc_cntrl.pc_out)
+  .clk (clk),
+  .pc  (pc_cntrl.pc_out)
 );
 
 decoder d
 (
-  .inst           (i.inst)
+  .inst (i.inst)
 );
 
 pc_cntrl pc_cntrl
