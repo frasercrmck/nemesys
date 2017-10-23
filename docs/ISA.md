@@ -59,7 +59,8 @@ Comparison codes are: `NE`, `EQ`, `LT`, `LE`, `ULT`, `ULE`
 
 Codes `GE` and `GT` can be achieved by re-ordering the operands and using `LT`
 and `LE` operands, respectively. Same goes for the corresponding unsigned
-comparisons.
+comparisons. This doesn't currently work for immediate comparisons as the
+immediate operands are always on the RHS.
 
 | CC  |  C2 |  C1 |  C0 |
 | --- | --- | --- | --- |

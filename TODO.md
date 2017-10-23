@@ -7,7 +7,7 @@ Verilog
 - [x] "small immediate" encodings
 - [x] halting
 - [x] comparisons w/ immediates
-- [ ] sub w/ immediate should reverse operands: #imm - rA?
+- [ ] reversible immediates: can't currently rA >= #imm, as #imm is always 'B'
 - [x] branch when predicate false
 - [ ] link register
 - [ ] call/return instructions
