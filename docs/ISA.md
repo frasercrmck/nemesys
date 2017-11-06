@@ -115,10 +115,10 @@ BR [!]pA, #IMM
 
 #### Notes
 
-Branch target `#IMM` is relative offset.
-Branch target `#IMM` is sign-extended to 32-bits
-If bit `N` is not set, the branch is taken if predicate `pA` is set; if bit `N`
-is set, the branch is taken is `pA` is not set.
+* Branch target `#IMM` is relative offset.
+* Branch target `#IMM` is sign-extended to 32-bits
+* If bit `N` is not set, the branch is taken if predicate `pA` is set; if bit
+  `N` is set, the branch is taken is `pA` is not set.
 
 #### Encoding
 
@@ -136,9 +136,9 @@ CALL #IMM
 
 #### Notes
 
-Call target `#IMM` is relative offset.
-Call target `#IMM` is sign-extended to 32-bits
-Sets the link register (`r31`) with PC + 1
+* Call target `#IMM` is relative offset.
+* Call target `#IMM` is sign-extended to 32-bits
+* Sets the link register (`r31`) with PC + 1
 
 #### Encoding
 
