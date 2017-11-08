@@ -82,12 +82,18 @@ OOOOOISX|XXXXXZZZ|XXXCCCAA|AAABBBBB
 #### Syntax
 
 ```
-MOV #IMM, Z
+MOV  #IMM, rZ
+MOVH #IMM, rZ
 ```
 
 #### Notes
 
+* `MOV` moves the immediate into the low 16 bits of `rZ`. The upper 16 bits are zeroed.
+* `MOVH` moves the immediate into the high 16 bits of `rZ`. The lower 16 bits are untouched.
+
 Immediate field `#IMM` is currently always sign-extended to 32 bits.
+
+There is no way of moving a sign-extended immediate. That may come in the future.
 
 #### Encoding
 

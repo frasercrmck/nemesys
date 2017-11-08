@@ -38,6 +38,8 @@ always @(*) begin
       z_data <= $signed(a_data) >>> shift_amount;
     `MOV:
       z_data <= a_data;
+    `MOVH:
+      z_data[31:16] <= a_data[15:0];
     `CMP:
     begin
       z_data[31:1] <= 0;

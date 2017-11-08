@@ -39,7 +39,7 @@ wire is_alu_inst = (opcode == `ADD ||
                     opcode == `SRA ||
                     opcode == `CMP);
 
-assign is_mov    = opcode == `MOV;
+assign is_mov    = opcode == `MOV || opcode == `MOVH;
 assign is_branch = opcode == `BR;
 assign is_call   = opcode == `CALL;
 assign is_ret    = opcode == `RET;

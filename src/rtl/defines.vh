@@ -31,7 +31,8 @@
 
 `define CMP 5'd13
 
-`define MOV 5'd15
+`define MOV  5'd15
+`define MOVH 5'd16
 
 `define BR  5'd19
 `define HALT 5'd20

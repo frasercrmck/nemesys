@@ -9,7 +9,7 @@ Verilog
 - [x] comparisons w/ immediates
 - [ ] reversible immediates: can't currently rA >= #imm, as #imm is always 'B'
 - [ ] add/sub with carry
-- [ ] mov immediate hi/lo 16-bits
+- [x] mov immediate hi/lo 16-bits
 - [x] branch when predicate false
 - [x] link register
 - [x] call/return instructions
