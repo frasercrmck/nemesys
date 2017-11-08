@@ -60,19 +60,20 @@ assign z_regbank_sel = is_cmp ? `P_REGS : `S_REGS;
 assign has_large_imm = is_mov || is_branch || is_call;
 
 assign has_small_imm = is_alu_inst && inst[26] == 1'b1;
+
+assign is_a_sext = !is_mov;
 assign is_b_sext = has_small_imm && inst[25] == 1'b1;
 
-assign a_regbank_addr = is_branch ? inst[18:16] : is_ret ? `R31 : is_mov ? 0 : inst[9:5];
+assign a_regbank_addr = is_branch ? inst[18:16] : is_ret ? `R31 : has_large_imm ? 0 : inst[9:5];
 assign b_regbank_addr = has_large_imm ? 0 : inst[4:0];
 assign z_regbank_addr = is_branch ? 0 : is_call ? `R31 : inst[20:16];
 
-// TODO: Not always sign-extended???
-assign a_from_regbank = !is_mov;
-assign a_data = {{16{inst[15]}}, inst[15:0] };
+assign a_from_regbank = !has_large_imm;
+assign a_data = !is_a_sext ? inst[15:0] : {{16{inst[15]}}, inst[15:0]};
 
 assign b_from_regbank = !has_large_imm && !has_small_imm;
 
-wire [(`REG_SEL - 1):0] b_imm = has_small_imm ? b_regbank_addr : 0;
+wire [(`REG_SEL - 1):0] b_imm = has_small_imm ? inst[4:0] : 0;
 assign b_data = !is_b_sext ? b_imm : {{27{b_imm[(`REG_SEL - 1)]}}, b_imm};
 
 endmodule // decoder_unit
