@@ -13,6 +13,9 @@ Verilog
 - [x] branch when predicate false
 - [x] link register
 - [x] call/return instructions
+- [ ] conditional call/return instructions
+- [ ] branch to register
+- [ ] encode ret as branch-to-register (???)
 - [ ] memory instructions
 - [ ] select instructions
 - [ ] remove hard-coded numbers; be as generic as possible
