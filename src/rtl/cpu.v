@@ -25,7 +25,8 @@ wire take_branch = (decoder.is_branch &&
                      !decoder.is_negated_branch &&  regs.a_data[0])) ||
                     decoder.is_call || decoder.is_ret;
 
-wire write_enable = state == `WRITE_BACK && !decoder.is_branch;
+wire write_enable = state == `WRITE_BACK &&
+                    !decoder.is_branch && !decoder.is_ret;
 
 //==------------------------------------------------------------------------==//
 // Unit Instantiations
