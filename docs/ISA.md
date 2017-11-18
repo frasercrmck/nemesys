@@ -44,8 +44,8 @@ Integer comparisons.
 #### Syntax
 
 ```
-CMP rA <CC> rB, pZ
-CMP rA <CC> #I, pZ
+CMP.CC rA, rB, pZ
+CMP.CC rA, #I, pZ
 ```
 
 #### Notes
