@@ -62,7 +62,6 @@ assign has_large_imm = is_mov || is_branch || is_call;
 assign has_small_imm = is_alu_inst && inst[26] == 1'b1;
 
 assign is_a_sext = !is_mov;
-assign is_b_sext = has_small_imm && inst[25] == 1'b1;
 
 assign a_regbank_addr = is_branch ? inst[18:16] : is_ret ? `R31 : has_large_imm ? 0 : inst[9:5];
 assign b_regbank_addr = has_large_imm ? 0 : inst[4:0];
@@ -73,7 +72,6 @@ assign a_data = !is_a_sext ? inst[15:0] : {{16{inst[15]}}, inst[15:0]};
 
 assign b_from_regbank = !has_large_imm && !has_small_imm;
 
-wire [(`REG_SEL - 1):0] b_imm = has_small_imm ? inst[4:0] : 0;
-assign b_data = !is_b_sext ? b_imm : {{27{b_imm[(`REG_SEL - 1)]}}, b_imm};
+assign b_data = !has_small_imm ? inst[4:0] : {{27{inst[25]}}, inst[4:0]};
 
 endmodule // decoder_unit
