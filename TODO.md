@@ -28,7 +28,14 @@ Misc
 Software
 --------
 
-- [ ] simple LLVM TableGen description files
-- [ ] assembly parser/printer
-- [ ] object emitter
+- [x] simple LLVM TableGen description files
+- [x] assembly parser/printer
+- [x] object emitter
+- [ ] TableGen negated predicate
+- [ ] print/parse/decode negative integers
 - [ ] simulator
+
+LLVM
+----
+
+- [ ] Enum TableGen backend? Unify enum descriptions
