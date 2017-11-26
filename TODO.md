@@ -31,7 +31,7 @@ Software
 - [x] simple LLVM TableGen description files
 - [x] assembly parser/printer
 - [x] object emitter
-- [ ] TableGen negated predicate
+- [x] TableGen negated predicate
 - [ ] print/parse/decode negative integers
 - [ ] simulator
 
