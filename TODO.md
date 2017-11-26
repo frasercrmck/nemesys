@@ -7,7 +7,7 @@ Verilog
 - [x] "small immediate" encodings
 - [x] halting
 - [x] comparisons w/ immediates
-- [ ] reversible immediates: can't currently rA >= #imm, as #imm is always 'B'
+- [x] reversible immediates: can't currently rA >= #imm, as #imm is always 'B'
 - [ ] add/sub with carry
 - [x] mov immediate hi/lo 16-bits
 - [x] branch when predicate false

@@ -5,7 +5,7 @@
 module alu_unit
 (
   input wire[4:0] opcode,
-  input wire[2:0] cc,
+  input wire[3:0] cc,
   input wire [(`WIDTH - 1):0] a_data,
   input wire [(`WIDTH - 1):0] b_data,
   output reg [(`WIDTH - 1):0] z_data
@@ -56,6 +56,14 @@ always @(*) begin
           z_data[0] <= $unsigned(a_data) < $unsigned(b_data);
         `ULE:
           z_data[0] <= $unsigned(a_data) <= $unsigned(b_data);
+        `GE:
+          z_data[0] <= $signed(a_data) >= $signed(b_data);
+        `GT:
+          z_data[0] <= $signed(a_data) > $signed(b_data);
+        `UGE:
+          z_data[0] <= $unsigned(a_data) >= $unsigned(b_data);
+        `UGT:
+          z_data[0] <= $unsigned(a_data) > $unsigned(b_data);
       endcase
     end
   endcase // opcode

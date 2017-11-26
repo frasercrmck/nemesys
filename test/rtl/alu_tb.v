@@ -6,7 +6,7 @@ reg [4:0]  opcode;
 reg [31:0] data_a;
 reg [31:0] data_b;
 
-reg [2:0] cc;
+reg [3:0] cc;
 
 initial begin
   $dumpfile("alu_tb.vcd");

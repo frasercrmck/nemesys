@@ -9,7 +9,7 @@ module decoder_unit
   output wire is_call,
   output wire is_ret,
   output wire halted,
-  output wire [2:0] cc,
+  output wire [3:0] cc,
   // 'A' Data
   output wire a_regbank_sel,
   output wire a_from_regbank,
@@ -48,7 +48,7 @@ assign halted    = opcode == `HALT;
 
 assign is_negated_branch = is_branch && inst[19];
 
-assign cc = is_cmp ? inst[12:10] : 3'bz;
+assign cc = is_cmp ? inst[13:10] : 4'bz;
 
 // Input B is always a scalar register (if any)
 assign b_regbank_sel = `S_REGS;

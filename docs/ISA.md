@@ -55,26 +55,25 @@ mechanism as for other ALU instructions, above.
 
 `CC` is the condition code, and `pZ` is a predicate register.
 
-Comparison codes are: `NE`, `EQ`, `LT`, `LE`, `ULT`, `ULE`
+Comparison codes are: `NE`, `EQ`, `LT`, `LE`, `GT`, `GE`, `ULT`, `ULE`, `UGT`, & `UGE`.
 
-Codes `GE` and `GT` can be achieved by re-ordering the operands and using `LT`
-and `LE` operands, respectively. Same goes for the corresponding unsigned
-comparisons. This doesn't currently work for immediate comparisons as the
-immediate operands are always on the RHS.
-
-| CC  |  C2 |  C1 |  C0 |
-| --- | --- | --- | --- |
-| EQ  |  0  |  0  |  0  |
-| NE  |  0  |  0  |  1  |
-| LT  |  0  |  1  |  0  |
-| LE  |  0  |  1  |  1  |
-| ULT |  1  |  0  |  0  |
-| ULE |  1  |  0  |  1  |
+| CC  |  C3 |  C2 |  C1 |  C0 |
+| --- | --- | --- | --- | --- |
+| EQ  |  0  |  0  |  0  |  0  |
+| NE  |  0  |  0  |  0  |  1  |
+| LT  |  0  |  0  |  1  |  0  |
+| LE  |  0  |  0  |  1  |  1  |
+| ULT |  0  |  1  |  0  |  0  |
+| ULE |  0  |  1  |  0  |  1  |
+| GE  |  1  |  0  |  1  |  0  |
+| GT  |  1  |  0  |  1  |  1  |
+| UGE |  1  |  1  |  0  |  0  |
+| UGT |  1  |  1  |  0  |  1  |
 
 #### Encoding
 
 ```
-OOOOOISX|XXXXXZZZ|XXXCCCAA|AAABBBBB
+OOOOOISX|XXXXXZZZ|XXCCCCAA|AAABBBBB
 ```
 
 ### LARGE_IMM

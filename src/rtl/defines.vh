@@ -40,12 +40,16 @@
 `define CALL  5'd21
 `define RET   5'd22
 
-`define EQ  3'b000
-`define NE  3'b001
-`define LT  3'b010
-`define LE  3'b011
-`define ULT 3'b100
-`define ULE 3'b101
+`define EQ  4'b0000
+`define NE  4'b0001
+`define LT  4'b0010
+`define LE  4'b0011
+`define ULT 4'b0100
+`define ULE 4'b0101
+`define GE  4'b1010
+`define GT  4'b1011
+`define UGE 4'b1100
+`define UGT 4'b1101
 
 `define  R0 5'd0
 `define  R1 5'd1
