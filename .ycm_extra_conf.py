@@ -116,7 +116,14 @@ def FlagsForFile( filename, **kwargs ):
     if not compilation_info:
       return None
 
+    XCODE = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/'
+
     final_flags = list( compilation_info.compiler_flags_ )
+    final_flags.append( '-I/usr/local/include' )
+    final_flags.append( '-isystem' )
+    final_flags.append( XCODE + 'usr/include/c++/v1' )
+    final_flags.append( '-isystem' )
+    final_flags.append( XCODE + 'usr/lib/clang/9.0.0/include/' )
 
     return {
         'flags': final_flags,
