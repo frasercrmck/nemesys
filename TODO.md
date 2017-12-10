@@ -38,4 +38,4 @@ Software
 LLVM
 ----
 
-- [ ] Enum TableGen backend? Unify enum descriptions
+- [x] Enum TableGen backend? Unify enum descriptions
